@@ -1,4 +1,3 @@
-% function eyeTrackProcessData
 function eyeTrackProcessData(SubjectData,ids,paths)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
