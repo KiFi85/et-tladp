@@ -4,6 +4,7 @@
 * [Introduction](#Introduction)
 * [Description](#Description)
   * [Overview](#Overview)
+  * [Required files](#Required-files)
 * [Installation](#Installation)
   * [First time set-up](#First-time-set-up)
 
@@ -24,7 +25,23 @@ As well as identifying fixations and saccades, the user can select which eye to 
 
 ### Required files
 
+There are three required files in order for the applications to work.
 
+##### *EyeTrackTasksLib.mat*
+
+This library stores all the information about each task, image and area of interest as well as the screen information on which they are displayed. A single task containing a single image (stored online) has been added to the library for demonstration.
+
+##### *monitors.mat*
+
+This is a struct containing information about the eye tracker display size and is used to calculate resized image dimensions.
+
+##### *LibLocation.txt*
+
+MATLAB Compiler does not allow for the specification of directories in which to store required files. This project was designed to be used over a shared network, with multiple users accessing and editing the same tasks library. To remove the need for the apps to continually prompt the users for a file path to the library, this text file contains the location of *EyeTrackTasksLib* and *monitors* and is scanned at application start-up. For example, if the library and monitors files are stored on the user's desktop:
+
+![LibLocation](demo files/LibLocations.png)
+
+The *LibLocation.txt* file itself is stored in the root of the installation directory so that it may be accessed by a relative file path.
 
 ### Classes included
 
