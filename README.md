@@ -39,7 +39,7 @@ This is a struct containing information about the eye tracker display size and i
 
 MATLAB Compiler does not allow for the specification of directories in which to store required files. This project was designed to be used over a shared network, with multiple users accessing and editing the same tasks library. To remove the need for the apps to continually prompt the users for a file path to the library, this text file contains the location of *EyeTrackTasksLib* and *monitors* and is scanned at application start-up. For example, if the library and monitors files are stored on the user's desktop:
 
-![LibLocation](demo files/LibLocation.png)
+![LibLocation](demo%20files/LibLocation.png)
 
 The *LibLocation.txt* file itself is stored in the root of the installation directory so that it may be accessed by a relative file path.
 
@@ -60,7 +60,7 @@ The apps require a tasks library to run. MATLAB Compiler doesn't allow specifica
 
 ### Editing tasks
 
-![drawAoiDemo](demo files/drawAoiDemo.gif)
+![drawAoiDemo](demo%20files/drawAoiDemo.gif)
 
 ### Processing data
 
