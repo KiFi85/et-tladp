@@ -10,7 +10,7 @@
 
 
 ## Introduction
-The *Eye Tracking Tasks Library and Data Processing* (et-tladp) project includes 3 Windows desktop applications used for the creation of a tasks library and the processing of eye tracking data. The tasks library contains all the relevant information about a task, its associated images and areas of interest (AOIs) within each image. This is then referenced during data processing, allowing for the application of a spatial filter to detect AOI hits. The data processing app *EyeTrackRunTask* has been written to handle data output from Birkbeck's [Task Engine](https://sites.google.com/site/taskenginedoc/)
+The *Eye Tracking Tasks Library and Data Processing* (et-tladp) project includes 3 Windows desktop applications used for the creation of a tasks library and the processing of eye tracking data. The tasks library contains all the relevant information about a task, its associated images and areas of interest (AOIs) within each image. This is then referenced during data processing, allowing for the application of a spatial filter to detect AOI hits. The data processing app *EyeTrackRunTask* has been written specifically to process data output from Birkbeck's [Task Engine](https://sites.google.com/site/taskenginedoc/) using a Tobii X60 eye tracker. Task Engine uses [Tobii analytics SDK](http://developer.tobiipro.com/). Currently *EyeTrackRunTask* can only be used with these data outputs.
 
 ## Key features
 
@@ -52,7 +52,7 @@ This is a struct containing information about the eye tracker display size and i
 #### *LibLocation.txt*
 MATLAB Compiler does not allow for the specification of directories in which to store required files. This project was designed to be used over a shared network, with multiple users accessing and editing the same tasks library. To remove the need for the apps to continually prompt the users for a file path to the library, this text file contains the location of *EyeTrackTasksLib* and *monitors* and is scanned at application start-up. For example, if the library and monitors files are stored on the user's desktop:
 
-![LibLocation](demo%20files/LibLocation.png)
+![LibLocation](demo%20files/LibLocation.png) <!-- .element height="50%" width="50%" -->
 
 The *LibLocation.txt* file itself should be stored in the root of the installation directory so that it may be accessed by a relative file path.
 
@@ -78,7 +78,7 @@ Clicking *New AOI* will turn on Drawing mode. Drag the shape and resize if neces
 ![drawAoiDemo](demo%20files/drawAoiDemo.gif)
 
 ### EyeTrackRunTask
-This app processes the eye tracking data.
+This app processes the eye tracking data output from Task Engine.
 
 ### Editing tasks library
 
