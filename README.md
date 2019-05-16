@@ -73,6 +73,7 @@ The apps folder contains three executables compiled in MATLAB. MATLAB Runtime is
 
 ##### Viewing existing tasks
 Existing tasks and associated images and AOIs are viewed in the first tree along with a table containing AOI dimensions
+
 <img src="demo%20files/viewingExistingTask.png" alt="viewingExistingTask" height="70%" width="70%">
 
 ##### Creating new tasks
