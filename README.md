@@ -46,7 +46,7 @@ The user can choose to parse the data into fixations and saccades using the fixa
 
 As well as identifying fixations and saccades, the user can select which eye to analyse, interpolate data, merge adjacent fixations and discard short fixations, using adjustable parameters. See [here](https://www.tobiipro.com/siteassets/tobii-pro/learn-and-support/analyze/how-do-we-classify-eye-movements/determining-the-tobii-pro-i-vt-fixation-filters-default-values.pdf) for details on choosing parameter values.
 
-<img src="demo%20files/FixFilter.png" alt="FixFilter" height="60%" width="60%">
+<img src="demo%20files/fixFilter.png" alt="fixFilter" height="60%" width="60%">
 
 ### Required files
 There are three required files in order for the applications to work.
