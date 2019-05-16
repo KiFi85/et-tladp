@@ -2,15 +2,24 @@
 
 ## Table of contents
 * [Introduction](#Introduction)
+* [Key features](#Key-features)
 * [Description](#Description)
-  * [Overview](#Overview)
+  * [The fixation filter](#The-fixation-filter)
   * [Required files](#Required-files)
-* [Installation](#Installation)
-  * [First time set-up](#First-time-set-up)
-
+* [App installation](#App-installation)
+* [Application user guide](#Application-user-guide)
+  * [EyeTrackEditTasks](#EyeTrackEditTasks)
+  * [EyeTrackRunTask](#EyeTrackRunTask)
+  * [EyeTrackLibraryEdit](#EyeTrackLibraryEdit)
+* [Limitations](#Limitations)
+  * [To-do list](#To-do-list)
+  * [Notes](#Notes)
+* [Software used](#Software-used)
 
 ## Introduction
-The *Eye Tracking Tasks Library and Data Processing* (et-tladp) project includes 3 Windows desktop applications used for the creation of a tasks library and the processing of eye tracking data. The tasks library contains all the relevant information about a task, its associated images and areas of interest (AOIs) within each image. This is then referenced during data processing, allowing for the application of a spatial filter to detect AOI hits. The data processing app *EyeTrackRunTask* has been written specifically to process data output from Birkbeck's [Task Engine](https://sites.google.com/site/taskenginedoc/) using a Tobii X60 eye tracker. Task Engine uses [Tobii analytics SDK](http://developer.tobiipro.com/). Currently *EyeTrackRunTask* can only be used with these data outputs.
+The *Eye Tracking Tasks Library and Data Processing* (et-tladp) project includes 3 Windows desktop applications used for the creation of a tasks library and the processing of eye tracking data. The tasks library contains all the relevant information about a task, its associated images and areas of interest (AOIs) within each image. This is then referenced during data processing, allowing for the application of a spatial filter to detect AOI hits. The data processing app *EyeTrackRunTask* has been written specifically to process data output from Birkbeck's [Task Engine](https://sites.google.com/site/taskenginedoc/) using a Tobii X60 eye tracker. Task Engine uses [Tobii analytics SDK](http://developer.tobiipro.com/). Currently *EyeTrackRunTask* can only be used with these data outputs. Task Engine uses [Tobii SDK](demo%20files/Tobii%20SDK%20Documentation.pdf)
+
+The apps were designed to be standalone desktop applications, removing the need for users to have any coding experience or MATLAB installed. As such, they have been designed with specific users and data in mind. The *EyeTrackEditTasks* and *EyeTrackLibraryEdit* apps may be used for anyone wishing to build a tasks library of their own or simply get AOI coordinates for images.
 
 ## Key features
 
@@ -37,8 +46,7 @@ The user can choose to parse the data into fixations and saccades using the fixa
 
 As well as identifying fixations and saccades, the user can select which eye to analyse, interpolate data, merge adjacent fixations and discard short fixations, using adjustable parameters. See [here](https://www.tobiipro.com/siteassets/tobii-pro/learn-and-support/analyze/how-do-we-classify-eye-movements/determining-the-tobii-pro-i-vt-fixation-filters-default-values.pdf) for details on choosing parameter values.
 
-![FixFilter](demo%20files/FixFilter.png)
-
+<img src="demo%20files/FixFilter.png" alt="FixFilter" height="60%" width="60%">
 
 ### Required files
 There are three required files in order for the applications to work.
@@ -52,7 +60,7 @@ This is a struct containing information about the eye tracker display size and i
 #### *LibLocation.txt*
 MATLAB Compiler does not allow for the specification of directories in which to store required files. This project was designed to be used over a shared network, with multiple users accessing and editing the same tasks library. To remove the need for the apps to continually prompt the users for a file path to the library, this text file contains the location of *EyeTrackTasksLib* and *monitors* and is scanned at application start-up. For example, if the library and monitors files are stored on the user's desktop:
 
-![LibLocation](demo%20files/LibLocation.png) <!-- .element height="50%" width="50%" -->
+<img src="demo%20files/LibLocation.png" alt="LibLocation" height="50%" width="40%">
 
 The *LibLocation.txt* file itself should be stored in the root of the installation directory so that it may be accessed by a relative file path.
 
@@ -63,25 +71,54 @@ The apps folder contains three executables compiled in MATLAB. MATLAB Runtime is
 
 ### EyeTrackEditTasks
 
-#### Creating new tasks
+##### Viewing existing tasks
+Existing tasks and associated images and AOIs are viewed in the first tree along with a table containing AOI dimensions
+<img src="demo%20files/viewingExistingTask.png" alt="viewingExistingTask" height="70%" width="70%">
+
+##### Creating new tasks
 A new task can be added, a display monitor chosen and images allocated to the task. The task type dropdown refers to whether the images are static or gaze contingent (e.g. gap overlap). The image ID can be edited if required.
 
-![addNewTask](demo%20files/addNewTask.png)
+<img src="demo%20files/addNewTask.png" alt="addNewTask" height="70%" width="70%">
 
-### Adding AOIs
+#### Adding AOIs
 AOIs can be added by drawing or manual entry of pixel coordinates. Manual entry can only be used for rectangular AOIs. Select a task and image. To draw an AOI, select task, image and shape and then click *Load Image*. To enter manually, change the AOI entry method and enter details in the table. Clicking *Display New AOIs* will show all AOIs entered. The AOIs won't be committed to the library until they are saved.
 
-#### Drawing AOI example
+##### Drawing AOI example
 Clicking *New AOI* will turn on Drawing mode. Drag the shape and resize if necessary. Once you're happy with it, clicking *Save AOI* will prompt for a name for the AOI. Multiple shapes can be drawn by clicking *New AOI*
 
 ##### Drawing a rectangular AOI 'eyes'
-![drawAoiDemo](demo%20files/drawAoiDemo.gif)
+<img src="demo%20files/drawAoiDemo.gif" alt="drawAoiDemo" height="90%" width="90%">
 
 ### EyeTrackRunTask
-This app processes the eye tracking data output from Task Engine.
+This app is designed to process data output from Task Engine but could be customised to handle other data. The fixation filter parameters are selected, images and AOIs, subjects and finally summary table outputs.
 
-### Editing tasks library
+### EyeTrackLibraryEdit
+This app allows the user to edit names of tasks, images and AOIs already saved to the tasks library.
 
 ## Limitations
+* *EyeTrackRunTask* app currently only works with data output from Task Engine. This only affects the way in which it searches for valid data directories so may be easily customised to suit.
+* There is capability for spatial filtering but not currently an option for temporal filtering
+* Data processing is only capable of handling static images or gaze contingent (gap overlap) trials, again specific to Task Engine outputs
+* Some of the app components may appear stretched on certain displays.
+
+### To-do list
+* Ensure all code is annotated with function and class descriptors
+* Add capability to add a new monitor via the app (although this can be done by simply editing the *monitors.mat* struct)
+* Add capability in *EyeTrackEditTasks* to copy AOIs from one image to another
+* Add a 'Total Fixation Count' option as an output summary table
+* The way the error logs are written is in the process of being changed and needs to be finished
+* Include a temporal filter to allow the user to define a window in which to analyse the data
+* Edit the app function that resizes the window based on different display size/resolutions so that components are displayed correctly
+
+### Notes
+* The demo image is stored on GitHub which means load times can be slow. It is best to create a new task with a local image using *EyeTrackEditTasks* and delete the demo task 'Task Example' using *EyeTrackLibraryEdit*
+* If the apps are being run through MATLAB, it will look for the *LibLocation.txt* file in its parent folder. When the app is deployed it looks for the root installation folder
+* The *EyeTrackFixationFilter* class can be used for any data by editing the eye position and gaze vector variable properties.  
+* Eye tracker remote time (microseconds) is expected as input
 
 ## Software used
+* MATLAB R2018b
+* MATLAB App Designer
+* MATLAB Compiler v7.0
+* MATLAB Image Processing Toolbox v10.3
+* [RunLength](https://uk.mathworks.com/matlabcentral/fileexchange/41813-runlength) from MATLAB File Exchange
