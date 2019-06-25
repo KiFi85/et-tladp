@@ -21,7 +21,7 @@ The *Eye Tracking Tasks Library and Data Processing* (et-tladp) project includes
 
 The apps were designed to be standalone desktop applications, removing the need for users to have any coding experience or MATLAB installed. As such, they have been designed with specific users and data in mind. The *EyeTrackEditTasks* and *EyeTrackLibraryEdit* apps may be used for anyone wishing to build a tasks library of their own or simply get AOI coordinates for images.
 
-## Key features
+## Key features 
 
 #### Tasks library
 * Load and save images to new task
