@@ -848,6 +848,10 @@ classdef EyeTrackData < handle
            % Convert arrays to table
            gazeData = obj.taskData;
            timeData = [obj.remoteTime,obj.msFromOnset];
+           if sum(cell2mat(strfind(obj.FixFilter.gazeEventType,'Unclassified'))) == length(obj.FixFilter.gazeEventType)
+              obj.FixFilter.gazeEventIndex = NaN(size(obj.FixFilter.gazeEventType));
+              obj.FixFilter.gazeEventDuration = NaN(size(obj.FixFilter.gazeEventType));
+           end
            eventData = [obj.FixFilter.gazeEventType,...
                obj.FixFilter.gazeEventIndex,...
                obj.FixFilter.gazeEventDuration];
