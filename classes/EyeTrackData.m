@@ -137,8 +137,8 @@ classdef EyeTrackData < handle
             if exist(fullfile(strcat(csvDir{nRuns},'\gap_trial2.csv')))
                 csvDir = strcat(csvDir,'\gap_trial2.csv');
             else
-%                 recoverData(fullfile(csvDir{nRuns}));
-%                 csvDir = strcat(csvDir,'\gap_trial2.csv');
+                 recoverData(fullfile(csvDir{nRuns}));
+                 csvDir = strcat(csvDir,'\gap_trial2.csv');
                 
                 obj.addErrorToLog(...
                     {obj.subjectID,...
@@ -280,81 +280,106 @@ classdef EyeTrackData < handle
         end
         
         function validrows = checkTrialValidity(obj)
-            
-            % trial type
-            conditions = obj.gapInfo.Condition;
-            
-            % loop through trials, get total and total excluded
-            trials = obj.gapTrialTypes;
-            nTrialsCell = {[],[],[]};
+            if isempty(obj.gapInfo)
+                    validrows = [];
+                    nTrialsCell = {NaN,NaN,NaN};
+                    % Assign empty ttff storage array 
+                    if obj.runTTFF
+                        obj.tTFFData = nTrialsCell;
+                    end
 
-            for trial = 1:length(trials)
+                    if obj.runTFD || obj.runTLT
 
-                % Subset by trial
-                trialName = trials{trial};
-                trialData = obj.gapInfo(...
-                    strcmp(string(conditions),trialName),...
-                    {'ValidGazeOnCS'});
+                       % If running TFD, each will contain in/out AOI so repeat
+                       % elements
+                       baseline = {NaN,NaN,NaN,NaN,NaN,NaN};
+                       gap = {NaN,NaN,NaN,NaN,NaN,NaN};
+                       overlap = {NaN,NaN,NaN,NaN,NaN,NaN};
 
-                % Number of trials 
-                nTrials = height(trialData);
+                       if obj.runTFD
+                           obj.tFDData = {baseline,gap,overlap};
+                       elseif obj.runTLT
+                           obj.tLTData = {baseline,gap,overlap};
+                       end
 
-                % Create empty array to store trials
-                nTrialsCell{trial} = cell(1,nTrials);
+                    end
 
-                % Invalid trials to store as NaN
-                invalidTrials = find(trialData.ValidGazeOnCS==0);
-                nInvalidTrials = length(invalidTrials);
-                nValidTrials = nTrials - nInvalidTrials;
+            else
+                    % trial type
+                    conditions = obj.gapInfo.Condition;
 
-                % NaN invalid trials in cell
-                % - 99 will be replaced with 'IV'
-                nTrialsCell{trial}(invalidTrials) = {'Invalid Trial'};
+                    % loop through trials, get total and total excluded
+                    trials = obj.gapTrialTypes;
+                    nTrialsCell = {[],[],[]};
 
-                % Create data log message
-                msg = {...
-                    obj.subjectID,...
-                    trialName,...
-                    nValidTrials,...
-                    nInvalidTrials};
-                
-                % Update data log
-                obj.addDataToLog(msg);
-                
-                % Create error message
-                msg = repmat({...
-                    obj.subjectID,...
-                    trialName,'','invalid trial'},nInvalidTrials,1);
-                msg(:,3) = num2cell(invalidTrials);
+                    for trial = 1:length(trials)
 
-                % Update error log
-                obj.addErrorToLog(msg);
-                
-            end
-            
-            % Return valid rows
-            validrows = find(obj.gapInfo.ValidGazeOnCS==1);
-%             obj.gapInfo(invalid,:) = [];
-            
-            % Assign empty ttff storage array 
-            if obj.runTTFF
-                obj.tTFFData = nTrialsCell;
-            end
-            
-            if obj.runTFD || obj.runTLT
-               
-               % If running TFD, each will contain in/out AOI so repeat
-               % elements
-               baseline = repelem(nTrialsCell{1},2);
-               gap = repelem(nTrialsCell{2},2);
-               overlap = repelem(nTrialsCell{3},2);
-               
-               if obj.runTFD
-                   obj.tFDData = {baseline,gap,overlap};
-               elseif obj.runTLT
-                   obj.tLTData = {baseline,gap,overlap};
-               end
-               
+                        % Subset by trial
+                        trialName = trials{trial};
+                        trialData = obj.gapInfo(...
+                            strcmp(string(conditions),trialName),...
+                            {'ValidGazeOnCS'});
+
+                        % Number of trials 
+                        nTrials = height(trialData);
+
+                        % Create empty array to store trials
+                        nTrialsCell{trial} = cell(1,nTrials);
+
+                        % Invalid trials to store as NaN
+                        invalidTrials = find(trialData.ValidGazeOnCS==0);
+                        nInvalidTrials = length(invalidTrials);
+                        nValidTrials = nTrials - nInvalidTrials;
+
+                        % NaN invalid trials in cell
+                        % - 99 will be replaced with 'IV'
+                        nTrialsCell{trial}(invalidTrials) = {'Invalid Trial'};
+
+                        % Create data log message
+                        msg = {...
+                            obj.subjectID,...
+                            trialName,...
+                            nValidTrials,...
+                            nInvalidTrials};
+
+                        % Update data log
+                        obj.addDataToLog(msg);
+
+                        % Create error message
+                        msg = repmat({...
+                            obj.subjectID,...
+                            trialName,'','invalid trial'},nInvalidTrials,1);
+                        msg(:,3) = num2cell(invalidTrials);
+
+                        % Update error log
+                        obj.addErrorToLog(msg);
+
+                    end
+
+                    % Return valid rows
+                    validrows = find(obj.gapInfo.ValidGazeOnCS==1);
+        %             obj.gapInfo(invalid,:) = [];
+
+                    % Assign empty ttff storage array 
+                    if obj.runTTFF
+                        obj.tTFFData = nTrialsCell;
+                    end
+
+                    if obj.runTFD || obj.runTLT
+
+                       % If running TFD, each will contain in/out AOI so repeat
+                       % elements
+                       baseline = repelem(nTrialsCell{1},2);
+                       gap = repelem(nTrialsCell{2},2);
+                       overlap = repelem(nTrialsCell{3},2);
+
+                       if obj.runTFD
+                           obj.tFDData = {baseline,gap,overlap};
+                       elseif obj.runTLT
+                           obj.tLTData = {baseline,gap,overlap};
+                       end
+
+                    end
             end
         end
         

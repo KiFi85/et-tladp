@@ -26,7 +26,9 @@ formatSpec = '%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s
 
 %% Open the text file.
 fileID = fopen(filename,'r');
-
+if fileID < 0
+    gaptrial2 = table;
+else
 %% Read columns of data according to the format.
 % This call is based on the structure of the file used to generate this
 % code. If an error occurs for a different file, try regenerating the code
@@ -164,4 +166,4 @@ gaptrial2.GapCsImg = categorical(rawStringColumns(:, 8));
 gaptrial2.GapBGCol = cell2mat(rawNumericColumns(:, 52));
 gaptrial2.Condition = categorical(rawStringColumns(:, 9));
 gaptrial2.Side = cell2mat(rawNumericColumns(:, 53));
-
+end

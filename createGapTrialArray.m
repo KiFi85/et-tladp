@@ -11,7 +11,13 @@ function [arrOut,headers] = createGapTrialArray(inData,trialType,summaryType)
     % Expand cell array to size of largest number of trials
     % fill empty spaces with 0
     filledData = cellfun(@(x) [x, repmat({'No Trial'},1,maxTrials-numel(x))], inData, 'UniformOutput', false);
-    
+    for j=1:length(filledData)
+        for i=1:length(filledData{j})
+            if isempty(filledData{j}{i})
+                filledData{j}{i} = 'No Trial';
+            end
+        end
+    end  
     % Create cell array
     trialArray = vertcat(filledData{:});
     
